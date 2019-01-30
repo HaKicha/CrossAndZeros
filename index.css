@@ -1,0 +1,34 @@
+.box {
+    border: 2px solid black;
+    background: #888;
+    margin: 1px;
+}
+
+span {
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: block;
+}
+span:hover{
+    cursor: default;
+}
+span.cross {
+    color: red;
+}
+span.circle {
+    color: green;
+    font-weight: bolder;
+}
+
+.row {
+    font-size: 0%;
+    display: inline-flex;
+}
+
+#change {
+    position: absolute;
+    display: block;
+    top: 20px;
+}
