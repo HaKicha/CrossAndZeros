@@ -1,3 +1,7 @@
+body {
+    display: block;
+}
+
 .box {
     border: 2px solid black;
     background: #888;
@@ -27,12 +31,89 @@ span.circle {
     display: inline-flex;
 }
 
-#change {
-    position: absolute;
+h1, h4, button, label {
+    font-family: fantasy;
+}
+
+.menu-icon-box {
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin: 10px 40px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background: #888;
+    margin: 1px;
+}
+
+.menu-icon-box:last-child {
+    float: right;
+}
+
+.menu-icon-box:hover:not(.active){
+    background: #666;
+}
+
+.menu-icon-box span{
+    font-size: 80px !important;
+    height: 100px;
+    width: 100px;
+}
+
+.active {
+    background: #444;
+}
+
+#menu {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    padding: 20px;
+    border: #444444 2px solid;
+    border-radius: 5px;
+    background: #769de2;
+
+}
+
+#menu-button {
+    background: #006bff;
+    height: 70px;
+    width: 200px;
+    border-radius: 25px;
+    font-size: 40pt;
+    margin: auto;
     display: block;
-    top: 20px;
-    height: 30px;
-    width: 90px;
-    background: #f00;
-    border-radius: 3px;
+    border: #bbb 2px solid;
+}
+
+#menu-button:hover {
+    background: #004bff;
+}
+
+h1, h4{
+    color: #000;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.params-block {
+    margin: 20px auto;
+}
+
+input {
+    width: 50px;
+    margin: 0px 50px 0px auto;
+    float: right;
+    display: block;
+}
+
+label {
+    display: block;
+    margin: 20px auto 10px 50px;
+}
+
+.hidden {
+    display: none;
 }

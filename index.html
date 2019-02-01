@@ -6,7 +6,30 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<button id="change">Change</button>
+<div id="menu">
+    <h1>Crosses and Zeroes</h1>
+    <div class="menu-panel centered">
+        <button id="menu-button">Start</button>
+        <h4>Chose your hero!</h4>
+        <div class="chose-hero-block">
+            <div class=" menu-icon-box">
+                <span class="circle">&#x1F786</span>
+            </div>
+            <div class=" menu-icon-box active">
+                <span class="cross">&#x2716</span>
+            </div>
+        </div>
+        <div class="params-block">
+            <label>Field width
+                <input type="number" id="fieldWidth" min="3" value="3" max="20">
+            </label>
+            <label>Win Line Length
+                <input type="number" id="winLineLength" min="3" value="3" max="20">
+            </label>
+        </div>
+    </div>
+</div>
 <script src="index.js"></script>
+<script src="menu.js"></script>
 </body>
 </html>

@@ -1,11 +1,17 @@
-let fieldWidth = 4;
+let fieldWidth = 15;
 let field = '';
 let row = '';
 const cross = 'cross';
 const circle = 'circle';
-let playerSymbol = cross;
-let winLineLength = 4;
+let playerSymbol = circle;
+let winLineLength = 5;
 let playerStep = true;
+const fieldProection = [];
+//**********************************************************************************************************************
+let playerStepSound = new Audio();
+playerStepSound.preload = 'auto';
+playerStepSound.src = './cuek.swf.mp3';
+//**********************************************************************************************************************
 
 //Adding click event on box
 const clickHandler = function (event) {
@@ -24,45 +30,57 @@ const clickHandler = function (event) {
                     break;
                 }
         }
-        ;
-        if(checkWinner()) return;
+        playerStepSound.play();
+        if(checkWinner()) {
+            playerStep = true;
+            return;
+        }
         ChoseBoxAfterTime();
     }
 
 };
-
-//Creating of field View
-function createFieldView() {
-    for (let j = 0; j < fieldWidth; j++) row += '<div class="box"></div>'
-    for (let i = 0; i < fieldWidth; i++) field += '<div class="row">' + row + '</div><br/>'
-    document.body.innerHTML += '<div>' + field + '</div>';
-    Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => elem.addEventListener('click', clickHandler));
-    window.onresize = () => {
-        let height = ((document.documentElement.clientHeight - 50) / fieldWidth) / 1 + "px";
-        Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => {
-            elem.style.width = height;
-            elem.style.height = height;
-        });
+window.onresize = () => {
+    let height = ((document.documentElement.clientHeight - 150) / fieldWidth) / 1 + "px";
+    Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => {
+        elem.style.width = height;
+        elem.style.height = height;
+    });
+    try {
         let width = document.getElementsByClassName('box')[1].clientWidth * 0.85;
         Array.prototype.forEach.call(document.getElementsByClassName('cross'), (elem) => elem.style.fontSize = width + 'px');
         Array.prototype.forEach.call(document.getElementsByClassName('circle'), (elem) => elem.style.fontSize = width * 0.85 + 'px');
-        document.getElementById('change').style.left = window.innerHeight + 60 + 'px';
-    };
+    } catch (e) {
+        
+    }
+    
+};
+//Creating of field View
+function createFieldView() {
+    for (let j = 0; j < fieldWidth; j++)
+        row += '<div class="box"></div>'
+    for (let i = 0; i < fieldWidth; i++)
+        field += '<div class="row">' + row + '</div><br/>'
+    document.body.innerHTML += '<div id="field">' + field + '</div>';
+    Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => elem.addEventListener('click', clickHandler));
+    window.onresize.call();
+    row = '';
+    field = '';
 };
 //Updating field
 window.onload = function () {
-    window.onresize();
+    window.onresize.call();
 };
 
 
 //**********************************************************************************************************************
-const fieldProection = [];
 
-let initField = (arr) => {
-    for (let i = 0; i < fieldWidth; i++) arr[i] = [];
-    for (let i = 0; i < arr.length; i++)
-        for (let j = 0; j < arr.length; j++)
-            arr[i][j] = 0;
+
+
+let initField = () => {
+    for (let i = 0; i < fieldWidth; i++) fieldProection[i] = [];
+    for (let i = 0; i < fieldProection.length; i++)
+        for (let j = 0; j < fieldProection.length; j++)
+            fieldProection[i][j] = 0;
 };
 
 function calcCost(arr, x, y, max) {
@@ -165,6 +183,28 @@ function calcCost(arr, x, y, max) {
                 }
             }
         }
+
+        if ((y - i >= 0 && x - i >= 0 && typeof (arr[y - i][x - i]) === 'string') &&
+            (y + i < fieldWidth && x + i < fieldWidth && typeof (arr[y + i][x + i]) === 'string') &&
+            arr[y - i][x - i] === arr[y + i][x + i]) {
+            resArr[0]++;
+            resArr[7]++;
+        }        if ((y - i >= 0 && typeof (arr[y - i][x]) === 'string') &&
+            (y + i < fieldWidth && typeof (arr[y + i][x]) === 'string') &&
+            arr[y - i][x] === arr[y + i][x]) {
+            resArr[3]++;
+            resArr[4]++;
+        }        if ((y - i >= 0 && x + i < fieldWidth && typeof (arr[y - i][x + i]) === 'string') &&
+            (y + i < fieldWidth && x - i >= 0 && typeof (arr[y + i][x - i]) === 'string') &&
+            arr[y - i][x + i] === arr[y + i][x - i]) {
+            resArr[5]++;
+            resArr[2]++;
+        }        if ((x - i >= 0 && typeof (arr[y][x - i]) === 'string') &&
+            (x + i <= fieldWidth && typeof (arr[y][x + i]) === 'string') &&
+            arr[y][x - i] === arr[y][x + i]) {
+            resArr[1]++;
+            resArr[6]++;
+        }
     }
     let indexOfMax = 0;
     for (let i = 1; i < 8; i++) {
@@ -174,26 +214,12 @@ function calcCost(arr, x, y, max) {
             if (pointArr[i] !== playerSymbol) indexOfMax = i;
         }
     }
-    if (pointArr[indexOfMax] ===  playerSymbol ) return (resArr[indexOfMax] += 0.1);
+
+    if (pointArr[indexOfMax] !==  playerSymbol ) return (resArr[indexOfMax] += 0.1);
     return resArr[indexOfMax];
 }
 
 //**********************************************************************************************************************
-
-createFieldView();
-initField(fieldProection);
-
-//Change symbol
-document.getElementById('change').addEventListener('click', (event) => {
-    if (playerSymbol === cross) {
-        playerSymbol = circle;
-        event.target.style.background = 'green';
-    } else {
-        playerSymbol = cross;
-        event.target.style.background = 'red';
-    }
-});
-
 
 function choseBox() {
     let result = {
@@ -224,17 +250,32 @@ function ChoseBoxAfterTime() {
 }
 
 function setBlock(x, y) {
+    if (typeof (fieldProection[y][x]) !== 'string')
     document.getElementsByClassName('box')[x + y * fieldWidth]
         .innerHTML = ((playerSymbol === cross) ?
         '<span class="circle">&#9711</span>'
         : '<span class="cross">&#x2716</span>');
     window.onresize.call();
+    playerStepSound.play();
 }
 
 //**********************************************************************************************************************
 function checkWinner() {
     let buf = 0;
     let last = 0;
+    let draw = true;
+    //Draw checking
+    for (let i =0; i < fieldWidth; i++)
+    for (let j =0; j < fieldWidth; j++) {
+        if (typeof (fieldProection[i][j]) === 'number') draw = false;
+    }
+    if (draw) {
+        if (confirm("Game ended without a winner!\nDo you want to play again?"))
+            restartGame();
+        else closeGame();
+            return true;
+    }
+    //horizontal and vertical
     for (let i = 0; i < fieldWidth; i++) {
         buf = 0;
         last = 0;
@@ -246,7 +287,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -263,7 +306,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -281,7 +326,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -299,7 +346,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -317,7 +366,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -334,7 +385,9 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    alert("Player " + last + " win!");
+                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
+                        restartGame();
+                    else closeGame();
                     return true;
                 }
             }
@@ -343,3 +396,26 @@ function checkWinner() {
     return false;
 }
 //**********************************************************************************************************************
+function closeGame() {
+    document.getElementById('field').remove();
+    document.getElementById('menu').classList.remove('hidden');
+    initSymbChangeBtn();
+    document.getElementById('menu-button').addEventListener('click', function () {
+        if(document.getElementsByClassName('menu-icon-box')[0].classList.contains('active'))
+            playerSymbol = circle;
+        else playerSymbol = cross;
+
+        fieldWidth = document.getElementById('fieldWidth').value-0;
+        winLineLength = document.getElementById('winLineLength').value-0;
+
+        document.getElementById('menu').classList.add('hidden');
+        initField();
+        createFieldView();
+    });
+}
+//**********************************************************************************************************************
+function restartGame() {
+    document.getElementById('field').remove();
+    initField();
+    createFieldView();
+}
