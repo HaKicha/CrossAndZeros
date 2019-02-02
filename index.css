@@ -9,24 +9,6 @@ body {
     border-radius: 10%;
 }
 
-span {
-    font-size: 25px;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    display: block;
-}
-span:hover{
-    cursor: default;
-}
-span.cross {
-    color: red;
-}
-span.circle {
-    color: green;
-    font-weight: bolder;
-}
-
 .row {
     font-size: 0;
     display: inline-flex;
@@ -44,24 +26,16 @@ h1, h2, h3, h4, button, label {
     border-radius: 10%;
     border: 2px solid black;
     background: #888;
-    margin: 1px;
+    margin-left: 20px;
 }
 
 .menu-icon-box:last-child {
-    float: right;;
-}
-.menu-icon-box:last-child span {
-    font-size: 85px !important;
+    float: right;
+    margin-right: 20px;
 }
 
 .menu-icon-box:hover:not(.active){
     background: #666;
-}
-
-.menu-icon-box span{
-    font-size: 75px !important;;
-    height: 100px;
-    width: 100px;
 }
 
 .active {
@@ -162,3 +136,22 @@ b:first-child{
 b:last-child {
     color: green;
 }
+
+.image {
+    display: block;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.panel-down:not(.hidden) {
+    position: static !important;
+    display: block !important;
+    bottom: 20px !important;
+    width: 300px !important;
+}
+
+.panel-down h1,button{
+    display: inline-block;
+    margin: 10px 25px;
+}
+

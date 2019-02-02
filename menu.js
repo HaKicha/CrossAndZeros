@@ -22,9 +22,6 @@ function startGame() {
     if(document.getElementsByClassName('menu-icon-box')[0].classList.contains('active'))
         playerSymbol = circle;
     else playerSymbol = cross;
-
-    fieldWidth = document.getElementById('fieldWidth').value-0;
-    winLineLength = document.getElementById('winLineLength').value-0;
     document.getElementById('navigation').classList.remove('hidden');
     document.getElementById('menu').classList.add('hidden');
 
@@ -33,6 +30,16 @@ function startGame() {
     document.getElementById('score').innerHTML = '<b>'+ score.cross +'</b> : <b>'+ score.circle +'</b>';
     initField();
     createFieldView();
-
+    if(playerSymbol === circle) {
+        playerStep = false;
+        setTimeout(choseBox,1000);
+    }
 };
 //**********************************************************************************************************************
+function setFieldWidth() {
+    fieldWidth = document.getElementById('fieldWidth').value-0;
+}
+
+function setWinLineLength() {
+    winLineLength = document.getElementById('winLineLength').value-0;
+}

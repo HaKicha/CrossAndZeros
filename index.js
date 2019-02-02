@@ -1,10 +1,10 @@
-let fieldWidth = 15;
+let fieldWidth = 3;
 let field = '';
 let row = '';
 const cross = 'cross';
 const circle = 'circle';
 let playerSymbol = circle;
-let winLineLength = 5;
+let winLineLength = 3;
 let playerStep = true;
 const fieldProection = [];
 const score = {
@@ -28,7 +28,7 @@ const clickHandler = function (event) {
     if (playerStep) {
         playerStep = false;
         if (event.target.innerHTML === '') {
-            event.target.innerHTML = (playerSymbol === cross) ? '<span class="cross">&#x2716</span>' : '<span class="circle">&#9711</span>';
+            event.target.innerHTML = (playerSymbol === cross) ? '<img class="image" src="./images/cross.png" alt="">' : '<img class="image" src="./images/circle.png" alt="">';
             window.onresize.call();
             event.target.removeEventListener('click', clickHandler);
             event.target.setAttribute('Identify', 'true');
@@ -55,13 +55,10 @@ window.onresize = () => {
         elem.style.width = height;
         elem.style.height = height;
     });
-    try {
-        let width = document.getElementsByClassName('box')[1].clientWidth * 0.85;
-        Array.prototype.forEach.call(document.getElementsByClassName('cross'), (elem) => elem.style.fontSize = width + 'px');
-        Array.prototype.forEach.call(document.getElementsByClassName('circle'), (elem) => elem.style.fontSize = width * 0.85 + 'px');
-    } catch (e) {
-        
-    }
+
+    if (document.documentElement.clientHeight > document.documentElement.clientWidth - 150) {
+        document.getElementById('navigation').classList.add('panel-down');
+    } else document.getElementById('navigation').classList.remove('panel-down');
     
 };
 //Creating of field View
@@ -70,7 +67,7 @@ function createFieldView() {
         row += '<div class="box"></div>'
     for (let i = 0; i < fieldWidth; i++)
         field += '<div class="row">' + row + '</div><br/>'
-    document.body.innerHTML += '<div id="field">' + field + '</div>';
+    document.getElementById('root').innerHTML += '<div id="field">' + field + '</div>';
     Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => elem.addEventListener('click', clickHandler));
     window.onresize.call();
     row = '';
@@ -256,15 +253,13 @@ function choseBox() {
 
 function ChoseBoxAfterTime() {
     setTimeout(choseBox, 1500);
-    setTimeout(checkWinner, 1600);
+    setTimeout(checkWinner, 2000);
 }
 
 function setBlock(x, y) {
     if (typeof (fieldProection[y][x]) !== 'string')
     document.getElementsByClassName('box')[x + y * fieldWidth]
-        .innerHTML = ((playerSymbol === cross) ?
-        '<span class="circle">&#9711</span>'
-        : '<span class="cross">&#x2716</span>');
+        .innerHTML = (playerSymbol === cross) ? '<img class="image" src="./images/circle.png" alt="">' : '<img class="image" src="./images/cross.png" alt="">';
     window.onresize.call();
     playerStepSound.play();
 }
@@ -397,8 +392,9 @@ function checkWinner() {
 function closeGame() {
     document.getElementById('field').remove();
     document.getElementById('menu').classList.remove('hidden');
-    initSymbChangeBtn();
     document.getElementById('navigation').classList.add('hidden');
+    initSymbChangeBtn();
+    initSymbChangeBtn();
 }
 //**********************************************************************************************************************
 function restartGame() {

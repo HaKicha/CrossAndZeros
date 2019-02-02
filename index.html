@@ -13,24 +13,24 @@
         <h4>Chose your hero!</h4>
         <div class="chose-hero-block">
             <div class=" menu-icon-box">
-                <span class="circle">&#x1F786</span>
+                <img src="./images/circle.png" alt="" height="100" width="100">
             </div>
             <div class=" menu-icon-box active">
-                <span class="cross">&#x2716</span>
+                <img src="./images/cross.png" alt="" height="100" width="100">
             </div>
         </div>
         <div class="params-block">
             <label>Field width
-                <input type="number" id="fieldWidth" min="3" value="3" max="20">
+                <input type="number" id="fieldWidth" min="3" value="3" max="20" oninput="setFieldWidth()">
             </label>
             <label>Win Line Length
-                <input type="number" id="winLineLength" min="3" value="3" max="20">
+                <input type="number" id="winLineLength" min="3" value="3" max="20" oninput="setWinLineLength()">
             </label>
         </div>
     </div>
 </div>
+<div id="root"></div>
 <div id="navigation" class="hidden">
-    <h3>Score</h3>
     <h1 id="score"><b>0</b> : <b>0</b></h1>
     <button onclick="restartGame()">Restart</button>
     <button onclick="closeGame()">Menu</button>
