@@ -253,7 +253,7 @@ function choseBox() {
 
 function ChoseBoxAfterTime() {
     setTimeout(choseBox, 1500);
-    setTimeout(checkWinner, 2000);
+    setTimeout(checkWinner, 2500);
 }
 
 function setBlock(x, y) {
