@@ -24,7 +24,8 @@ function startGame() {
     else playerSymbol = cross;
     document.getElementById('navigation').classList.remove('hidden');
     document.getElementById('menu').classList.add('hidden');
-
+    setFieldWidth();
+    setWinLineLength();
     score.circle = 0;
     score.cross = 0;
     document.getElementById('score').innerHTML = '<b>'+ score.cross +'</b> : <b>'+ score.circle +'</b>';
