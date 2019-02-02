@@ -403,6 +403,7 @@ function restartGame() {
     document.getElementById('field').remove();
     initField();
     createFieldView();
+    if (playerSymbol === circle) choseBox();
 }
 //**********************************************************************************************************************
 function playerWin(winner) {
