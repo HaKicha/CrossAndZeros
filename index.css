@@ -6,6 +6,7 @@ body {
     border: 2px solid black;
     background: #888;
     margin: 1px;
+    border-radius: 10%;
 }
 
 span {
@@ -31,8 +32,8 @@ span.circle {
     display: inline-flex;
 }
 
-h1, h4, button, label {
-    font-family: fantasy;
+h1, h2, h3, h4, button, label {
+    font-family: sans-serif;
 }
 
 .menu-icon-box {
@@ -40,14 +41,17 @@ h1, h4, button, label {
     width: 100px;
     display: inline-block;
     margin: 10px 40px;
-    border-radius: 5px;
+    border-radius: 10%;
     border: 2px solid black;
     background: #888;
     margin: 1px;
 }
 
 .menu-icon-box:last-child {
-    float: right;
+    float: right;;
+}
+.menu-icon-box:last-child span {
+    font-size: 85px !important;
 }
 
 .menu-icon-box:hover:not(.active){
@@ -55,7 +59,7 @@ h1, h4, button, label {
 }
 
 .menu-icon-box span{
-    font-size: 80px !important;
+    font-size: 75px !important;;
     height: 100px;
     width: 100px;
 }
@@ -71,8 +75,8 @@ h1, h4, button, label {
     width: 400px;
     padding: 20px;
     border: #444444 2px solid;
-    border-radius: 5px;
-    background: #769de2;
+    border-radius: 5%;
+    background: #76adf2;
 
 }
 
@@ -80,7 +84,7 @@ h1, h4, button, label {
     background: #006bff;
     height: 70px;
     width: 200px;
-    border-radius: 25px;
+    border-radius: 10px;
     font-size: 40pt;
     margin: auto;
     display: block;
@@ -103,11 +107,14 @@ h1, h4{
 }
 
 input {
-    width: 50px;
     margin: 0px 50px 0px auto;
     float: right;
     display: block;
+    height: 17px;
+    width: 50px;
+
 }
+
 
 label {
     display: block;
@@ -115,5 +122,43 @@ label {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+#navigation {
+    position: absolute;
+    display: block;
+    right: 50px;
+    top: 50px;
+    border: #444444 solid 2px;
+    border-radius: 5%;
+    padding: 10px;
+    background: #deff7c;
+}
+
+#navigation h3,h2 {
+    margin: 5px auto;
+    display: block;
+    text-align: center;
+}
+
+#navigation button {
+    background: #57ce39;
+    height: 35px;
+    width: 70px;
+    border-radius: 4px;
+    margin: auto;
+    display: inline-block;
+    border: #333333 2px solid;
+    color: black;
+}
+
+#navigation button:hover {
+    background: #45a52c;
+}
+b:first-child{
+    color: red;
+}
+b:last-child {
+    color: green;
 }

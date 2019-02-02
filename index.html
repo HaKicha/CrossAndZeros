@@ -9,7 +9,7 @@
 <div id="menu">
     <h1>Crosses and Zeroes</h1>
     <div class="menu-panel centered">
-        <button id="menu-button">Start</button>
+        <button id="menu-button" onclick="startGame()">Start</button>
         <h4>Chose your hero!</h4>
         <div class="chose-hero-block">
             <div class=" menu-icon-box">
@@ -28,6 +28,12 @@
             </label>
         </div>
     </div>
+</div>
+<div id="navigation" class="hidden">
+    <h3>Score</h3>
+    <h1 id="score"><b>0</b> : <b>0</b></h1>
+    <button onclick="restartGame()">Restart</button>
+    <button onclick="closeGame()">Menu</button>
 </div>
 <script src="index.js"></script>
 <script src="menu.js"></script>

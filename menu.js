@@ -18,16 +18,21 @@ function initSymbChangeBtn() {
 }
 initSymbChangeBtn();
 //**********************************************************************************************************************
-document.getElementById('menu-button').addEventListener('click', function () {
+function startGame() {
     if(document.getElementsByClassName('menu-icon-box')[0].classList.contains('active'))
         playerSymbol = circle;
     else playerSymbol = cross;
 
     fieldWidth = document.getElementById('fieldWidth').value-0;
     winLineLength = document.getElementById('winLineLength').value-0;
-
+    document.getElementById('navigation').classList.remove('hidden');
     document.getElementById('menu').classList.add('hidden');
+
+    score.circle = 0;
+    score.cross = 0;
+    document.getElementById('score').innerHTML = '<b>'+ score.cross +'</b> : <b>'+ score.circle +'</b>';
     initField();
     createFieldView();
-});
+
+};
 //**********************************************************************************************************************

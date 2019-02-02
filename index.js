@@ -7,6 +7,10 @@ let playerSymbol = circle;
 let winLineLength = 5;
 let playerStep = true;
 const fieldProection = [];
+const score = {
+    circle: 0,
+    cross: 0
+}
 //**********************************************************************************************************************
 let playerStepSound = new Audio();
 playerStepSound.preload = 'auto';
@@ -241,12 +245,12 @@ function choseBox() {
     setBlock(result.x, result.y);
     fieldProection[result.y][result.x] = (playerSymbol === cross) ? 'circle' : 'cross';
     playerStep = true;
-    checkWinner();
     return result;
 };
 
 function ChoseBoxAfterTime() {
     setTimeout(choseBox, 1500);
+    setTimeout(checkWinner, 1600);
 }
 
 function setBlock(x, y) {
@@ -287,9 +291,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -306,9 +308,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -326,9 +326,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -346,9 +344,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -366,9 +362,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -385,9 +379,7 @@ function checkWinner() {
             } else {
                 if (last === circle || last === cross) buf++;
                 if (buf >= winLineLength) {
-                    if (confirm('Player ' + last + ' win!\nDo you want to play again?'))
-                        restartGame();
-                    else closeGame();
+                    playerWin(last);
                     return true;
                 }
             }
@@ -400,22 +392,22 @@ function closeGame() {
     document.getElementById('field').remove();
     document.getElementById('menu').classList.remove('hidden');
     initSymbChangeBtn();
-    document.getElementById('menu-button').addEventListener('click', function () {
-        if(document.getElementsByClassName('menu-icon-box')[0].classList.contains('active'))
-            playerSymbol = circle;
-        else playerSymbol = cross;
-
-        fieldWidth = document.getElementById('fieldWidth').value-0;
-        winLineLength = document.getElementById('winLineLength').value-0;
-
-        document.getElementById('menu').classList.add('hidden');
-        initField();
-        createFieldView();
-    });
+    document.getElementById('navigation').classList.add('hidden');
 }
 //**********************************************************************************************************************
 function restartGame() {
+    playerStep = true;
     document.getElementById('field').remove();
     initField();
     createFieldView();
+}
+//**********************************************************************************************************************
+function playerWin(winner) {
+    if (confirm('Player ' + winner + ' win!\nDo you want to play again?')) {
+        restartGame();
+        if (winner === cross) score.cross++;
+        else score.circle++;
+        document.getElementById('score').innerHTML = '<b>'+ score.cross +'</b> : <b>'+ score.circle +'</b>';
+    }
+    else closeGame();
 }
