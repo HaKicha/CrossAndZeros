@@ -14,7 +14,13 @@ const score = {
 //**********************************************************************************************************************
 let playerStepSound = new Audio();
 playerStepSound.preload = 'auto';
-playerStepSound.src = './cuek.swf.mp3';
+playerStepSound.src = './sound/step.mp3';
+let winSound = new Audio();
+winSound.preload = 'auto';
+winSound.src = './sound/win.mp3';
+let loseSound = new Audio();
+loseSound.preload = 'auto';
+loseSound.src = './sound/lose.mp3';
 //**********************************************************************************************************************
 
 //Adding click event on box
@@ -403,6 +409,8 @@ function restartGame() {
 }
 //**********************************************************************************************************************
 function playerWin(winner) {
+    if(winner === playerSymbol) winSound.play();
+    else loseSound.play();
     if (confirm('Player ' + winner + ' win!\nDo you want to play again?')) {
         restartGame();
         if (winner === cross) score.cross++;
