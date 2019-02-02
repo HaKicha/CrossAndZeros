@@ -260,6 +260,7 @@ function setBlock(x, y) {
     if (typeof (fieldProection[y][x]) !== 'string')
     document.getElementsByClassName('box')[x + y * fieldWidth]
         .innerHTML = (playerSymbol === cross) ? '<img class="image" src="./images/circle.png" alt="">' : '<img class="image" src="./images/cross.png" alt="">';
+    document.getElementsByClassName('box')[x + y * fieldWidth].removeEventListener('click', clickHandler);
     window.onresize.call();
     playerStepSound.play();
 }
