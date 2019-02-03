@@ -50,13 +50,13 @@ const clickHandler = function (event) {
 
 };
 window.onresize = () => {
-    let height = ((document.documentElement.clientHeight - 150) / fieldWidth) / 1 + "px";
+    let height = ((document.documentElement.clientHeight ) / fieldWidth) / 1 + "px";
     Array.prototype.forEach.call(document.getElementsByClassName('box'), (elem) => {
         elem.style.width = height;
         elem.style.height = height;
     });
 
-    if (document.documentElement.clientHeight > document.documentElement.clientWidth - 150) {
+    if (document.documentElement.clientHeight > document.documentElement.clientWidth ) {
         document.getElementById('navigation').classList.add('panel-down');
     } else document.getElementById('navigation').classList.remove('panel-down');
     
